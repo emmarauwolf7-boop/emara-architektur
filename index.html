@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>EMARA Architektur</title>
 
-  <!-- Social Preview / Teilen -->
-  <meta property="og:title" content="EMARA Architektur" />
-  <meta property="og:description" content="Architektur Portfolio – Entwurf · Konzept · Design" />
-  <meta property="og:image" content="https://emara-architektur.github.io/emara-architektur/logo.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://emara-architektur.github.io/emara-architektur/" />
+  <!-- Social Preview -->
+  <meta property="og:title" content="EMARA Architektur">
+  <meta property="og:description" content="Architektur Portfolio – Entwurf · Konzept · Design">
+  <meta property="og:image" content="https://emara-architektur.github.io/emara-architektur/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emara-architektur.github.io/emara-architektur/">
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="EMARA Architektur" />
-  <meta name="twitter:description" content="Architektur Portfolio – Entwurf · Konzept · Design" />
-  <meta name="twitter:image" content="https://emara-architektur.github.io/emara-architektur/logo.png" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EMARA Architektur">
+  <meta name="twitter:description" content="Architektur Portfolio – Entwurf · Konzept · Design">
+  <meta name="twitter:image" content="https://emara-architektur.github.io/emara-architektur/logo.png">
 
-  <link rel="icon" href="logo.png" />
+  <link rel="icon" href="logo.png">
 
   <style>
     :root {
@@ -135,10 +136,11 @@
     .card,
     .image-panel,
     .info-card,
-    .project-card,
     .news-card,
     .about-card,
-    .contact-card {
+    .contact-card,
+    .project-button,
+    .project-detail {
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
@@ -353,25 +355,45 @@
     /* Projects */
     .project-list {
       display: grid;
-      grid-template-columns: 1fr;
       gap: 18px;
     }
 
-    .project-card {
-      background: var(--panel);
-      padding: 24px 26px;
-      transition: transform 0.18s ease, background 0.18s ease;
+    .project-entry {
+      display: grid;
+      gap: 12px;
     }
 
-    .project-card:hover {
+    .project-button {
+      width: 100%;
+      text-align: left;
+      background: var(--panel);
+      padding: 24px 26px;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      transition: transform 0.18s ease, background 0.18s ease;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .project-button:hover {
       transform: translateX(4px);
       background: var(--panel-2);
+    }
+
+    .project-button.active {
+      background: var(--panel-2);
+    }
+
+    .project-button-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
     }
 
     .project-title {
       font-size: 19px;
       line-height: 1.45;
-      color: var(--text);
     }
 
     .project-number {
@@ -379,6 +401,73 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       margin-right: 10px;
+    }
+
+    .project-plus {
+      color: var(--accent);
+      font-size: 28px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .project-detail {
+      display: none;
+      background: linear-gradient(135deg, var(--panel) 0%, var(--bg-soft) 100%);
+      padding: 28px;
+    }
+
+    .project-detail.open {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .project-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .project-meta h3 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+    }
+
+    .project-meta p {
+      margin: 0 0 14px;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .project-facts {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .project-fact {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.65);
+      font-size: 15px;
+    }
+
+    .project-image-placeholder {
+      border: 1px dashed var(--line);
+      border-radius: 22px;
+      background: #fff;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      padding: 28px;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
     /* About */
@@ -464,10 +553,22 @@
       text-transform: uppercase;
     }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* Tablet */
     @media (max-width: 1024px) {
       .hero,
-      .about-grid {
+      .about-grid,
+      .project-detail-grid {
         grid-template-columns: 1fr;
       }
 
@@ -600,7 +701,8 @@
 
       .info-card,
       .news-card,
-      .project-card,
+      .project-button,
+      .project-detail,
       .about-card,
       .contact-card {
         padding: 22px 18px;
@@ -609,7 +711,8 @@
       }
 
       .info-card h3,
-      .about-card h3 {
+      .about-card h3,
+      .project-meta h3 {
         font-size: 24px;
         margin-bottom: 14px;
       }
@@ -618,7 +721,8 @@
       .about-card p,
       .about-card li,
       .news-text,
-      .contact-link {
+      .contact-link,
+      .project-meta p {
         font-size: 16px;
       }
 
@@ -646,6 +750,11 @@
 
       .news-title {
         font-size: 20px;
+      }
+
+      .project-image-placeholder {
+        min-height: 220px;
+        font-size: 15px;
       }
 
       .footer {
@@ -697,7 +806,7 @@
       </div>
 
       <div class="image-panel">
-        <img src="emma-stuhl.jpg" alt="Emma Rauwolf auf einem Sessel" class="hero-image" />
+        <img src="stuhlbild.jpg" alt="Emma Rauwolf auf einem Sessel" class="hero-image" />
       </div>
     </section>
 
@@ -752,24 +861,169 @@
       <h2>Projekte</h2>
 
       <div class="project-list">
-        <div class="project-card">
-          <div class="project-title"><span class="project-number">01</span>Vogelbeobachtungsstation</div>
+
+        <div class="project-entry">
+          <button class="project-button" type="button" onclick="toggleProject('p1', this)">
+            <div class="project-button-row">
+              <div class="project-title"><span class="project-number">01</span>Vogelbeobachtungsstation</div>
+              <div class="project-plus">+</div>
+            </div>
+          </button>
+          <div class="project-detail" id="p1">
+            <div class="project-detail-grid">
+              <div class="project-meta">
+                <h3>Vogelbeobachtungsstation</h3>
+                <p>
+                  Hier kannst du später dein Projekt beschreiben: Idee, Entwurfskonzept, Materialität, Atmosphäre und räumliche Wirkung.
+                </p>
+                <div class="project-facts">
+                  <div class="project-fact">Jahr: später ergänzen</div>
+                  <div class="project-fact">Ort: später ergänzen</div>
+                  <div class="project-fact">Typ: Beobachtungsstation / Naturraum</div>
+                </div>
+              </div>
+              <div class="project-image-placeholder">
+                Hier kannst du später 1–3 Bilder oder Renderings zu diesem Projekt einfügen.
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="project-card">
-          <div class="project-title"><span class="project-number">02</span>Eventpavillon</div>
+
+        <div class="project-entry">
+          <button class="project-button" type="button" onclick="toggleProject('p2', this)">
+            <div class="project-button-row">
+              <div class="project-title"><span class="project-number">02</span>Eventpavillon</div>
+              <div class="project-plus">+</div>
+            </div>
+          </button>
+          <div class="project-detail" id="p2">
+            <div class="project-detail-grid">
+              <div class="project-meta">
+                <h3>Eventpavillon</h3>
+                <p>
+                  Hier kannst du später Konzept, Nutzung, Entwurfsidee und besondere Qualitäten des Pavillons beschreiben.
+                </p>
+                <div class="project-facts">
+                  <div class="project-fact">Jahr: später ergänzen</div>
+                  <div class="project-fact">Ort: später ergänzen</div>
+                  <div class="project-fact">Typ: Pavillon / Eventarchitektur</div>
+                </div>
+              </div>
+              <div class="project-image-placeholder">
+                Platz für Bilder, Modellfotos, Renderings oder Pläne.
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="project-card">
-          <div class="project-title"><span class="project-number">03</span>Grünes Forum</div>
+
+        <div class="project-entry">
+          <button class="project-button" type="button" onclick="toggleProject('p3', this)">
+            <div class="project-button-row">
+              <div class="project-title"><span class="project-number">03</span>Grünes Forum</div>
+              <div class="project-plus">+</div>
+            </div>
+          </button>
+          <div class="project-detail" id="p3">
+            <div class="project-detail-grid">
+              <div class="project-meta">
+                <h3>Grünes Forum</h3>
+                <p>
+                  Hier kannst du später den Entwurf, das Freiraumkonzept und die Bedeutung des Projekts im städtischen Kontext erläutern.
+                </p>
+                <div class="project-facts">
+                  <div class="project-fact">Jahr: später ergänzen</div>
+                  <div class="project-fact">Ort: später ergänzen</div>
+                  <div class="project-fact">Typ: Forum / Freiraum / Öffentlichkeit</div>
+                </div>
+              </div>
+              <div class="project-image-placeholder">
+                Platzhalter für Projektbilder und Darstellungen.
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="project-card">
-          <div class="project-title"><span class="project-number">04</span>Haus der Demokratie</div>
+
+        <div class="project-entry">
+          <button class="project-button" type="button" onclick="toggleProject('p4', this)">
+            <div class="project-button-row">
+              <div class="project-title"><span class="project-number">04</span>Haus der Demokratie</div>
+              <div class="project-plus">+</div>
+            </div>
+          </button>
+          <div class="project-detail" id="p4">
+            <div class="project-detail-grid">
+              <div class="project-meta">
+                <h3>Haus der Demokratie</h3>
+                <p>
+                  Hier kannst du später das architektonische Konzept, die gesellschaftliche Idee und die räumliche Organisation beschreiben.
+                </p>
+                <div class="project-facts">
+                  <div class="project-fact">Jahr: später ergänzen</div>
+                  <div class="project-fact">Ort: später ergänzen</div>
+                  <div class="project-fact">Typ: Öffentliches Gebäude</div>
+                </div>
+              </div>
+              <div class="project-image-placeholder">
+                Hier können später Perspektiven, Pläne oder Modelle eingefügt werden.
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="project-card">
-          <div class="project-title"><span class="project-number">05</span>Ü60 Wohnen</div>
+
+        <div class="project-entry">
+          <button class="project-button" type="button" onclick="toggleProject('p5', this)">
+            <div class="project-button-row">
+              <div class="project-title"><span class="project-number">05</span>Ü60 Wohnen</div>
+              <div class="project-plus">+</div>
+            </div>
+          </button>
+          <div class="project-detail" id="p5">
+            <div class="project-detail-grid">
+              <div class="project-meta">
+                <h3>Ü60 Wohnen</h3>
+                <p>
+                  Hier kannst du später die Wohnidee, Gemeinschaftsaspekte und altersgerechte Konzepte ergänzen.
+                </p>
+                <div class="project-facts">
+                  <div class="project-fact">Jahr: später ergänzen</div>
+                  <div class="project-fact">Ort: später ergänzen</div>
+                  <div class="project-fact">Typ: Wohnen / Sozialer Wohnraum</div>
+                </div>
+              </div>
+              <div class="project-image-placeholder">
+                Platz für Wohnungsgrundrisse, Renderings oder Modellfotos.
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="project-card">
-          <div class="project-title"><span class="project-number">06</span>Schwimmbadumnutzung</div>
+
+        <div class="project-entry">
+          <button class="project-button" type="button" onclick="toggleProject('p6', this)">
+            <div class="project-button-row">
+              <div class="project-title"><span class="project-number">06</span>Schwimmbadumnutzung</div>
+              <div class="project-plus">+</div>
+            </div>
+          </button>
+          <div class="project-detail" id="p6">
+            <div class="project-detail-grid">
+              <div class="project-meta">
+                <h3>Schwimmbadumnutzung</h3>
+                <p>
+                  Hier kannst du später die Idee der Umnutzung, den Bestand und die neue räumliche Qualität beschreiben.
+                </p>
+                <div class="project-facts">
+                  <div class="project-fact">Jahr: später ergänzen</div>
+                  <div class="project-fact">Ort: später ergänzen</div>
+                  <div class="project-fact">Typ: Bestand / Umnutzung</div>
+                </div>
+              </div>
+              <div class="project-image-placeholder">
+                Hier können später Vorher-Nachher-Darstellungen oder Entwurfsbilder ergänzt werden.
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -818,5 +1072,29 @@
     </footer>
 
   </div>
+
+  <script>
+    function toggleProject(id, button) {
+      const detail = document.getElementById(id);
+      const isOpen = detail.classList.contains('open');
+
+      document.querySelectorAll('.project-detail').forEach(item => {
+        item.classList.remove('open');
+      });
+
+      document.querySelectorAll('.project-button').forEach(btn => {
+        btn.classList.remove('active');
+        const plus = btn.querySelector('.project-plus');
+        if (plus) plus.textContent = '+';
+      });
+
+      if (!isOpen) {
+        detail.classList.add('open');
+        button.classList.add('active');
+        const plus = button.querySelector('.project-plus');
+        if (plus) plus.textContent = '–';
+      }
+    }
+  </script>
 </body>
 </html>
